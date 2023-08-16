@@ -1,0 +1,53 @@
+---
+title: "R_Packages"
+author: "Ryan Womack"
+date: "2023-08-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Packages
+
+### The R packages book, by Wickham and Bryan
+
+This is a brief introduction to R package creation, taking as its text the book [R Packages, 2nd edition](https://r-pkgs.org) by Hadley Wickham and Jennifer Bryan.  This book is freely available on the web, so please consult for further details of topics that are only outlined here.  The second edition has been finalized in June 2023.
+
+### Install and load packages
+
+The fundamental packages required to create an R package are _devtools_, _roxygen2_, and _testthat_.  Please install these with the following commands if they are not already available on your system.  These will not install by default if you just attempt to run this R markdown file.
+```{r install packages, eval=FALSE}
+install.packages("devtools", dependencies=TRUE)
+install.packages("roxygen2", dependencies=TRUE)
+install.packages("testthat", dependencies=TRUE)
+
+devtools::session_info()
+```
+Let's load those libraries now.
+```{r libraries}
+library(devtools)
+library(roxygen2)
+library(testthat)
+```
+We can check that we're running recent enough versions of our software with the _packageVersion_ command for indivual packages, or _session_info_ for our entire setup.
+```{r versions}
+packageVersion("devtools")
+
+devtools::session_info()
+```
+
+### Outline of the creation of a little package
+
+We'll follow along with [Chapter 1](https://r-pkgs.org/whole-game.html) of the R Packages book and walk through the creation of a little package, even simpler than the "toy package" presented in the text.
+
+This will enable us to review the fundamental features of a typical package:
+
+* functions
+* version control
+* documentation (_roxygen2_)
+* testing (_testthat_)
+* creation of a README.Rmd file
+
+After we do this for our little package, we'll coverage some additional details relating to the steps above.
