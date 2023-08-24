@@ -65,6 +65,10 @@ This will enable us to review the fundamental features of a typical package:
 
 After we do this for our little package, we'll coverage some additional details relating to the steps above.
 
+### Caution!
+
+There is a conflict when using Rmarkdown to perform some of the steps below.  We're presenting the code in this .Rmd file since it allows us to insert explanatory text.  But you may be better off running the R_Packages.R version of this code, since that version is more straightforward.  Using Rmd cause some switching back and forth between the Rmd project directory and the package directory we're creating.  Just a caution!
+
 ### Create_package function
 
 We call _create_package_ to initiate a package.  We want to start this in its own fresh directory, not a pre-existing project or git repository.  The _create_package_ function will set up the necessary folder structure for a package. Please *EDIT* the contents of the command below to correspond to your computer's file system.  This is the one place in the code where you'll have to modify it.  Note that to be a valid package name and to be allowed on CRAN, the package name should:
@@ -78,10 +82,12 @@ We call _create_package_ to initiate a package.  We want to start this in its ow
 create_package("/home/ryan/R/littlePackage")
 ```
 
-This will launch a new window.  To be able to continue using our script here, just close that window and navigate in the original window to the package directory (same as what you used above), either via the RStudio Files window or with the following _setwd_ command (modified with the directory you used).  Alternatively, you could open the markdown file in the new session, but be sure to rerun the library commands in lines 30-32 above.
+This will launch a new window.  To be able to continue using our script here, we have to reopen the Rmd file.  Just use your "File --> Recent Files" option in the top menu bar.  We also have to reload our packages from the other session.
 
-```{r setwd}
-setwd("/home/ryan/R/littlePackage")
+```{r reload packages}
+library(devtools)
+library(roxygen2)
+library(testthat)
 ```
 The "dot files" beginning with a period (.) are used to store a history of the R session and to tell R and git to ignore certain files.  Generally we can leave these files as is and let R worry about how to handle them.  You shouldn't need to modify these files in most circumstances.
 
@@ -97,11 +103,161 @@ It is quite convenient to use _create_package_ to take care of all of this for u
 
 ### Git
 
-We won't go into any details about *git* or *github* usage, except to note that it is common and desirable to use this form of version control for your work, and also for sharing and collaboration.  To initiate the use of git in any R project (not just packages), use the command _use_git_, without any parameters or options.
+We won't go into any details about *git* or *github* usage, except to note that it is common and desirable to use this form of version control for your work, and also for sharing and collaboration.  To initiate the use of git in any R project (not just packages), use the command _use_git_.  To be sure we're committing the right directory, we use setwd to navigate to the directory for our package first.  Select the positive option when asked if you want to commit your files.  If your RStudio resets again at this stage, you'll have to reload the packages in lines 82-84 again.
 
 ```{r use git}
+proj_set("/home/ryan/R/littlePackage/")
 use_git()
 ```
 
+### Writing a function
+
+We are going to write a very basic function, just as an example.  Keep in mind that you can write functions to accomplish almost any task you want to in R, and write as many of them as you want.  Many packages have been born out of the gradual accumulation of useful functions.  Our function will be called _funkyadd_ and it just adds a little modification to addition.
+
+```{r funkyadd}
+funkyadd <- function(x,y)
+  {
+  x+y+1
+}
+```
+
+Just for fun, let's also create a _randomadd_ function that introduces true uncertainty into the addition process.
+```{r randomadd}
+randomadd <- function(x,y)
+  {
+  x+y+round(rnorm(1,0,3),digits=0)
+}
+```
+
+We can see these functions in action, attempting to add 6 and 9.
+
+```{r examples}
+funkyadd(6,9)
+randomadd(6,9)
+```
+
+We're not here to talk about functions, but about how functions are used in packages, so let's move on from these examples.  We use _use_r_ to add functions to our R directory for the our little package, as follows:
+
+```{r use_r}
+use_r("funkyadd")
+use_r("randomadd")
+```
+Copy and paste the function definitons into the editor window that pops up.  Namely, lines 114-117 for _funkyadd_ and lines 122-125 for _randomadd_.
+
+Now we run _load_all_ to bring our functions as we've defined them into the R workspace.  Note that we remove the previous manually created functions just to show that _load_all_ is working properly.  
+We also reconfirm that we're in the correct project directory.  Then we can check that the functions are in our workspace, now provided directly by the package defintions.
+```{r load_all}
+rm(funkyadd)
+rm(randomadd)
+setwd("/home/ryan/R/littlePackage/")
+proj_set("/home/ryan/R/littlePackage/")
+load_all()
+funkyadd(3,5)
+randomadd(3,5)
+```
+
+In the actual development of a package, it is recommended to commit your changes using git as you go along, but we'll omit those steps for clarity of exposition here.
+
+### Checking your work
+
+R has a function to look for any errors in your package.  In the terminal, you could type _R CMD check_.  Within R or Rstudio, use _check_
+
+```{r check}
+check()
+```
+We get a lot of output and a useful note and a warning in this case.
+
+### Filling in the details
+
+*Edit the DESCRIPTION* file using RStudio.  Just insert your own name and descriptive information in the fields and save.
+
+Run _use_mit_license_ to insert a complete current license for your package. Note the appearance of the LICENSE files after this. We could also use GPL or other licenses.  Use the _document_ command to make it finito.
+
+```{r license}
+use_mit_license()
+```
+
+If you use RStudio, open R/funkyadd.R in the source editor and put the cursor somewhere in the _funkyadd_ function definition. Now select *Code > Insert roxygen skeleton* from the RStudio menu. A very special comment should appear above your function, in which each line begins with #'. RStudio only inserts a barebones template, so you will need to edit it to add descriptive information after the #' @___ characters.
+
+Now we run the _document_ command to generate Rdocumentation format files from our R commands.  We can repeat this process for _randomadd_.  Note that we could also create Rdocumentation (.Rd) files in a text editor, but the roxygen/document process saves us from learning a new set of markup tags.
+
+```{r document}
+document()
+?funkyadd
+```
+Now we can get help on _funkyadd_ with the usual ?funkyadd syntax. The NAMESPACE file has also been updated by the _document_ command.
+
+We can now _check_ and _install_ the package to include it in our R space.  We can now load it with a _library_ command, although you may still want to _load_all_ to be safe.  Our functions should work now.
+```{r check and install}
+check()
+install()
+library(littlePackage)
+load_all()
+randomadd(3,6)
+```
+
+We can test our package systematically by loading _use_testthat_ and then running tests using _use_test_.  Note that we have to create our own tests to run them.  These might check, for example, that the results of certain functions fall into the values we expect them to take.  The _use_test_ function will insert properly named R files into a "tests" directory, but it is up to you to edit them into something sensible.  Once tests are created, you can run them all with the _test_ command.
+
+```{r testthat}
+use_testthat()
+use_test("funkyadd")
+test()
+```
+
+### Some additional useful commands
+
+We can require the use of certain packages with the _use_package_ command.
+
+We can connect our project to a specific Github repository using the _use_github_ command.
+
+For usage on Github, we need a more complete README file.  The _use_readme_rmd_ command will set this up for us.  This creates a README.Rmd file that is structured for typical R package usage, along with a process for generating a Github-friendly README.md file as well.  Just use the _build_readme_ command to render the .md formatted file.
+
+These steps are highly recommended for a working package, but we won't try to reproduce them in this short introduction.
+
+### Finishing up the little package
+
+A final _check_ and _install_ once you are satisfied with all the edits on your package will finalize, rebuild, and install the package properly.
+```{r}
+```
 
 
+```{r}
+```
+
+
+```{r}
+```
+
+```{r check and install}
+check()
+install()
+```
+
+* 
+* use_package()
+* use_github()
+* use_readme_rmd()
+* check() [last time]
+* install() [last time]
+
+
+### Review of command sequence
+
+We used the following commands to step through the creation, editing, and testing of our package.
+
+* create_package()
+* use_git()
+* use_r()
+* load_all()
+* check()
+* use_mit_license()
+* document()
+* check()  [again]
+* edit the DESCRIPTION using RStudio
+* install()
+* use_testthat()
+* use_package()
+* use_github()
+* use_readme_rmd()
+* check() [last time]
+* install() [last time]
