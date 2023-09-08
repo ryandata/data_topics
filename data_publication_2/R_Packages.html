@@ -86,7 +86,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#the-r-packages-book-by-wickham-and-bryan" id="toc-the-r-packages-book-by-wickham-and-bryan" class="nav-link" data-scroll-target="#the-r-packages-book-by-wickham-and-bryan"><span class="header-section-number">1.1</span> The R packages book, by Wickham and Bryan</a></li>
   <li><a href="#install-and-load-packages" id="toc-install-and-load-packages" class="nav-link" data-scroll-target="#install-and-load-packages"><span class="header-section-number">1.2</span> Install and load packages</a></li>
   <li><a href="#outline-of-the-creation-of-a-little-package" id="toc-outline-of-the-creation-of-a-little-package" class="nav-link" data-scroll-target="#outline-of-the-creation-of-a-little-package"><span class="header-section-number">1.3</span> Outline of the creation of a little package</a></li>
-  <li><a href="#create_package-function" id="toc-create_package-function" class="nav-link" data-scroll-target="#create_package-function"><span class="header-section-number">1.4</span> Create_package function</a></li>
+  <li><a href="#caution" id="toc-caution" class="nav-link" data-scroll-target="#caution"><span class="header-section-number">1.4</span> Caution!</a></li>
+  <li><a href="#create_package-function" id="toc-create_package-function" class="nav-link" data-scroll-target="#create_package-function"><span class="header-section-number">1.5</span> Create_package function</a></li>
+  <li><a href="#git" id="toc-git" class="nav-link" data-scroll-target="#git"><span class="header-section-number">1.6</span> Git</a></li>
+  <li><a href="#writing-a-function" id="toc-writing-a-function" class="nav-link" data-scroll-target="#writing-a-function"><span class="header-section-number">1.7</span> Writing a function</a></li>
+  <li><a href="#checking-your-work" id="toc-checking-your-work" class="nav-link" data-scroll-target="#checking-your-work"><span class="header-section-number">1.8</span> Checking your work</a></li>
+  <li><a href="#filling-in-the-details" id="toc-filling-in-the-details" class="nav-link" data-scroll-target="#filling-in-the-details"><span class="header-section-number">1.9</span> Filling in the details</a></li>
+  <li><a href="#some-additional-useful-commands" id="toc-some-additional-useful-commands" class="nav-link" data-scroll-target="#some-additional-useful-commands"><span class="header-section-number">1.10</span> Some additional useful commands</a></li>
+  <li><a href="#finishing-up-the-little-package" id="toc-finishing-up-the-little-package" class="nav-link" data-scroll-target="#finishing-up-the-little-package"><span class="header-section-number">1.11</span> Finishing up the little package</a></li>
+  <li><a href="#review-of-command-sequence" id="toc-review-of-command-sequence" class="nav-link" data-scroll-target="#review-of-command-sequence"><span class="header-section-number">1.12</span> Review of command sequence</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="R_Packages.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="R_Packages.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
@@ -189,7 +197,7 @@ Attaching package: 'testthat'</code></pre>
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/New_York
- date     2023-08-16
+ date     2023-09-08
  pandoc   3.1.1 @ /usr/lib/rstudio/resources/app/bin/quarto/bin/tools/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────
@@ -206,7 +214,7 @@ Attaching package: 'testthat'</code></pre>
  fastmap       1.1.1   2023-02-24 [2] CRAN (R 4.2.2)
  fs            1.6.3   2023-07-20 [2] CRAN (R 4.2.2)
  glue          1.6.2   2022-02-24 [2] CRAN (R 4.1.2)
- htmltools     0.5.5   2023-03-23 [2] CRAN (R 4.2.2)
+ htmltools     0.5.6   2023-08-10 [2] CRAN (R 4.2.2)
  htmlwidgets   1.6.2   2023-03-17 [2] CRAN (R 4.2.2)
  httpuv        1.6.11  2023-05-11 [2] CRAN (R 4.2.2)
  jsonlite      1.8.7   2023-06-29 [2] CRAN (R 4.2.2)
@@ -222,25 +230,25 @@ Attaching package: 'testthat'</code></pre>
  prettyunits   1.1.1   2020-01-24 [2] CRAN (R 4.0.4)
  processx      3.8.2   2023-06-30 [2] CRAN (R 4.2.2)
  profvis       0.3.8   2023-05-02 [2] CRAN (R 4.2.2)
- promises      1.2.0.1 2021-02-11 [2] CRAN (R 4.0.4)
+ promises      1.2.1   2023-08-10 [2] CRAN (R 4.2.2)
  ps            1.7.5   2023-04-18 [2] CRAN (R 4.2.2)
- purrr         1.0.1   2023-01-10 [2] CRAN (R 4.2.2)
+ purrr         1.0.2   2023-08-10 [2] CRAN (R 4.2.2)
  R6            2.5.1   2021-08-19 [2] CRAN (R 4.0.4)
  Rcpp          1.0.11  2023-07-06 [2] CRAN (R 4.2.2)
  remotes       2.4.2.1 2023-07-18 [2] CRAN (R 4.2.2)
  rlang         1.1.1   2023-04-28 [2] CRAN (R 4.2.2)
- rmarkdown     2.23    2023-07-01 [2] CRAN (R 4.2.2)
+ rmarkdown     2.24    2023-08-14 [2] CRAN (R 4.2.2)
  roxygen2    * 7.2.3   2022-12-08 [2] CRAN (R 4.2.2)
  rstudioapi    0.15.0  2023-07-07 [2] CRAN (R 4.2.2)
  sessioninfo   1.2.2   2021-12-06 [2] CRAN (R 4.0.4)
- shiny         1.7.4.1 2023-07-06 [2] CRAN (R 4.2.2)
+ shiny         1.7.5   2023-08-12 [2] CRAN (R 4.2.2)
  stringi       1.7.12  2023-01-11 [2] CRAN (R 4.2.2)
  stringr       1.5.0   2022-12-02 [2] CRAN (R 4.2.2)
  testthat    * 3.1.10  2023-07-06 [2] CRAN (R 4.2.2)
  urlchecker    1.0.1   2021-11-30 [2] CRAN (R 4.2.2)
  usethis     * 2.2.2   2023-07-06 [2] CRAN (R 4.2.2)
  vctrs         0.6.3   2023-06-14 [2] CRAN (R 4.2.2)
- xfun          0.39    2023-04-20 [2] CRAN (R 4.2.2)
+ xfun          0.40    2023-08-09 [2] CRAN (R 4.2.2)
  xml2          1.3.5   2023-07-06 [2] CRAN (R 4.2.2)
  xtable        1.8-4   2019-04-21 [2] CRAN (R 4.0.4)
  yaml          2.3.7   2023-01-23 [2] CRAN (R 4.2.2)
@@ -267,8 +275,12 @@ Attaching package: 'testthat'</code></pre>
 </ul>
 <p>After we do this for our little package, we’ll coverage some additional details relating to the steps above.</p>
 </section>
-<section id="create_package-function" class="level3" data-number="1.4">
-<h3 data-number="1.4" class="anchored" data-anchor-id="create_package-function"><span class="header-section-number">1.4</span> Create_package function</h3>
+<section id="caution" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="caution"><span class="header-section-number">1.4</span> Caution!</h3>
+<p>There is a conflict when using Rmarkdown to perform some of the steps below. We’re presenting the code in this .Rmd file since it allows us to insert explanatory text. But you may be better off running the R_Packages.R version of this code, since that version is more straightforward. Using Rmd cause some switching back and forth between the Rmd project directory and the package directory we’re creating. Just a caution!</p>
+</section>
+<section id="create_package-function" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="create_package-function"><span class="header-section-number">1.5</span> Create_package function</h3>
 <p>We call <em>create_package</em> to initiate a package. We want to start this in its own fresh directory, not a pre-existing project or git repository. The <em>create_package</em> function will set up the necessary folder structure for a package. Please <em>EDIT</em> the contents of the command below to correspond to your computer’s file system. This is the one place in the code where you’ll have to modify it. Note that to be a valid package name and to be allowed on CRAN, the package name should:</p>
 <ul>
 <li>Contain only ASCII letters, numbers, and ‘.’</li>
@@ -282,7 +294,8 @@ Attaching package: 'testthat'</code></pre>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_package</span>(<span class="st">"/home/ryan/R/littlePackage"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Setting active project to '/home/ryan/R/littlePackage'</code></pre>
+<pre><code>✔ Setting active project to '/home/ryan/R/littlePackage'
+✔ Leaving 'DESCRIPTION' unchanged</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Package: littlePackage
@@ -298,14 +311,17 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Setting active project to '&lt;no active project&gt;'</code></pre>
+<pre><code>✔ Leaving 'NAMESPACE' unchanged
+✔ Setting active project to '&lt;no active project&gt;'</code></pre>
 </div>
 </div>
-<p>This will launch a new window. To be able to continue using our script here, just close that window and navigate in the original window to the package directory (same as what you used above), either via the RStudio Files window or with the following <em>setwd</em> command (modified with the directory you used). Alternatively, you could open the markdown file in the new session, but be sure to rerun the library commands in lines 30-32 above.</p>
+<p>This will launch a new window. To be able to continue using our script here, we have to reopen the Rmd file. Just use your “File –&gt; Recent Files” option in the top menu bar. We also have to reload our packages from the other session.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/home/ryan/R/littlePackage"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(roxygen2)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(testthat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The “dot files” beginning with a period (.) are used to store a history of the R session and to tell R and git to ignore certain files. Generally we can leave these files as is and let R worry about how to handle them. You shouldn’t need to modify these files in most circumstances.</p>
@@ -314,6 +330,220 @@ RoxygenNote: 7.2.3</code></pre>
 <p>One of the two locations that we <em>WILL</em> edit are the <em>DESCRIPTION</em>, which is a structured way of providing information about your package. This is what you will see when you look up the function in the R help system, or what would be displayed if your package makes it onto CRAN. For example, try typing ?testthat to see the description of that package.</p>
 <p>The other is the <em>R</em> folder. This is the folder that we will put our functions into. Optionally we could add a <em>data</em> folder as well, if we wanted to distribute data via our package.</p>
 <p>It is quite convenient to use <em>create_package</em> to take care of all of this for us.</p>
+</section>
+<section id="git" class="level3" data-number="1.6">
+<h3 data-number="1.6" class="anchored" data-anchor-id="git"><span class="header-section-number">1.6</span> Git</h3>
+<p>We won’t go into any details about <em>git</em> or <em>github</em> usage, except to note that it is common and desirable to use this form of version control for your work, and also for sharing and collaboration. To initiate the use of git in any R project (not just packages), use the command <em>use_git</em>. To be sure we’re committing the right directory, we use setwd to navigate to the directory for our package first. Select the positive option when asked if you want to commit your files. If your RStudio resets again at this stage, you’ll have to reload the packages in lines 82-84 again.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proj_set</span>(<span class="st">"/home/ryan/R/littlePackage/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Setting active project to '/home/ryan/R/littlePackage'</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_git</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="writing-a-function" class="level3" data-number="1.7">
+<h3 data-number="1.7" class="anchored" data-anchor-id="writing-a-function"><span class="header-section-number">1.7</span> Writing a function</h3>
+<p>We are going to write a very basic function, just as an example. Keep in mind that you can write functions to accomplish almost any task you want to in R, and write as many of them as you want. Many packages have been born out of the gradual accumulation of useful functions. Our function will be called <em>funkyadd</em> and it just adds a little modification to addition.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>funkyadd <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  x<span class="sc">+</span>y<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Just for fun, let’s also create a <em>randomadd</em> function that introduces true uncertainty into the addition process.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>randomadd <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  x<span class="sc">+</span>y<span class="sc">+</span><span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">3</span>),<span class="at">digits=</span><span class="dv">0</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can see these functions in action, attempting to add 6 and 9.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">funkyadd</span>(<span class="dv">6</span>,<span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">randomadd</span>(<span class="dv">6</span>,<span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14</code></pre>
+</div>
+</div>
+<p>We’re not here to talk about functions, but about how functions are used in packages, so let’s move on from these examples. We use <em>use_r</em> to add functions to our R directory for the our little package, as follows:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"funkyadd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>• Edit 'R/funkyadd.R'</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_r</span>(<span class="st">"randomadd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>• Edit 'R/randomadd.R'</code></pre>
+</div>
+</div>
+<p>Copy and paste the function definitons into the editor window that pops up. Namely, lines 114-117 for <em>funkyadd</em> and lines 122-125 for <em>randomadd</em>.</p>
+<p>Now we run <em>load_all</em> to bring our functions as we’ve defined them into the R workspace. Note that we remove the previous manually created functions just to show that <em>load_all</em> is working properly.<br>
+We also reconfirm that we’re in the correct project directory. Then we can check that the functions are in our workspace, now provided directly by the package definitions. [Note that at this point we’re no longer going to print output from our commands in this summary text, due to a conflict between the package directory and our home directory.]</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(funkyadd)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(randomadd)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/home/ryan/R/littlePackage/"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">proj_set</span>(<span class="st">"/home/ryan/R/littlePackage/"</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load_all</span>()</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">funkyadd</span>(<span class="dv">3</span>,<span class="dv">5</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="fu">randomadd</span>(<span class="dv">3</span>,<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>In the actual development of a package, it is recommended to commit your changes using git as you go along, but we’ll omit those steps for clarity of exposition here.</p>
+</section>
+<section id="checking-your-work" class="level3" data-number="1.8">
+<h3 data-number="1.8" class="anchored" data-anchor-id="checking-your-work"><span class="header-section-number">1.8</span> Checking your work</h3>
+<p>R has a function to look for any errors in your package. In the terminal, you could type <em>R CMD check</em>. Within R or Rstudio, use <em>check</em></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We get a lot of output and a useful note and a warning in this case.</p>
+</section>
+<section id="filling-in-the-details" class="level3" data-number="1.9">
+<h3 data-number="1.9" class="anchored" data-anchor-id="filling-in-the-details"><span class="header-section-number">1.9</span> Filling in the details</h3>
+<p><em>Edit the DESCRIPTION</em> file using RStudio. Just insert your own name and descriptive information in the fields and save.</p>
+<p>Run <em>use_mit_license</em> to insert a complete current license for your package. Note the appearance of the LICENSE files after this. We could also use GPL or other licenses. Use the <em>document</em> command to make it finito.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_mit_license</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>If you use RStudio, open R/funkyadd.R in the source editor and put the cursor somewhere in the <em>funkyadd</em> function definition. Now select <em>Code &gt; Insert roxygen skeleton</em> from the RStudio menu. A very special comment should appear above your function, in which each line begins with #‘. RStudio only inserts a barebones template, so you will need to edit it to add descriptive information after the #’ <span class="citation" data-cites="___">@___</span> characters.</p>
+<p>Now we run the <em>document</em> command to generate Rdocumentation format files from our R commands. We can repeat this process for <em>randomadd</em>. Note that we could also create Rdocumentation (.Rd) files in a text editor, but the roxygen/document process saves us from learning a new set of markup tags.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">document</span>()</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>?funkyadd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now we can get help on <em>funkyadd</em> with the usual ?funkyadd syntax. The NAMESPACE file has also been updated by the <em>document</em> command.</p>
+<p>We can now <em>check</em> and <em>install</em> the package to include it in our R space. We can now load it with a <em>library</em> command, although you may still want to <em>load_all</em> to be safe. Our functions should work now.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check</span>()</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span>()</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(littlePackage)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load_all</span>()</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">randomadd</span>(<span class="dv">3</span>,<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can test our package systematically by loading <em>use_testthat</em> and then running tests using <em>use_test</em>. Note that we have to create our own tests to run them. These might check, for example, that the results of certain functions fall into the values we expect them to take. The <em>use_test</em> function will insert properly named R files into a “tests” directory, but it is up to you to edit them into something sensible. Once tests are created, you can run them all with the <em>test</em> command.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">use_testthat</span>()</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_test</span>(<span class="st">"funkyadd"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="some-additional-useful-commands" class="level3" data-number="1.10">
+<h3 data-number="1.10" class="anchored" data-anchor-id="some-additional-useful-commands"><span class="header-section-number">1.10</span> Some additional useful commands</h3>
+<p>We can require the use of certain packages with the <em>use_package</em> command.</p>
+<p>We can connect our project to a specific Github repository using the <em>use_github</em> command.</p>
+<p>For usage on Github, we need a more complete README file. The <em>use_readme_rmd</em> command will set this up for us. This creates a README.Rmd file that is structured for typical R package usage, along with a process for generating a Github-friendly README.md file as well. Just use the <em>build_readme</em> command to render the .md formatted file.</p>
+<p>These steps are highly recommended for a working package, but we won’t try to reproduce them in this short introduction.</p>
+</section>
+<section id="finishing-up-the-little-package" class="level3" data-number="1.11">
+<h3 data-number="1.11" class="anchored" data-anchor-id="finishing-up-the-little-package"><span class="header-section-number">1.11</span> Finishing up the little package</h3>
+<p>A final <em>check</em> and <em>install</em> once you are satisfied with all the edits on your package will finalize, rebuild, and install the package properly.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check</span>()</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li></li>
+<li>use_package()</li>
+<li>use_github()</li>
+<li>use_readme_rmd()</li>
+<li>check() [last time]</li>
+<li>install() [last time]</li>
+</ul>
+</section>
+<section id="review-of-command-sequence" class="level3" data-number="1.12">
+<h3 data-number="1.12" class="anchored" data-anchor-id="review-of-command-sequence"><span class="header-section-number">1.12</span> Review of command sequence</h3>
+<p>We used the following commands to step through the creation, editing, and testing of our package.</p>
+<ul>
+<li>create_package()</li>
+<li>use_git()</li>
+<li>use_r()</li>
+<li>load_all()</li>
+<li>check()</li>
+<li>use_mit_license()</li>
+<li>document()</li>
+<li>check() [again]</li>
+<li>edit the DESCRIPTION using RStudio</li>
+<li>install()</li>
+<li>use_testthat()</li>
+<li>use_package()</li>
+<li>use_github()</li>
+<li>use_readme_rmd()</li>
+<li>check() [last time]</li>
+<li>install() [last time]</li>
+</ul>
+<p><img src="package_workflow.png" class="img-fluid" alt="Workflow for package creation"> Quoting the <em>R_Packages</em> book:</p>
+<p>Here is a review of the key functions you’ve seen here, organized roughly by their role in the development process.</p>
+<p>These functions setup parts of the package and are typically called once per package:</p>
+<ul>
+<li>create_package()</li>
+<li>use_git()</li>
+<li>use_mit_license()</li>
+<li>use_testthat()</li>
+<li>use_github()</li>
+<li>use_readme_rmd()</li>
+</ul>
+<p>You will call these functions on a regular basis, as you add functions and tests or take on dependencies:</p>
+<ul>
+<li>use_r()</li>
+<li>use_test()</li>
+<li>use_package()</li>
+</ul>
+<p>You will call these functions multiple times per day or per hour, during development:</p>
+<ul>
+<li>load_all()</li>
+<li>document()</li>
+<li>test()</li>
+<li>check()</li>
+</ul>
 </section>
 </section>
 

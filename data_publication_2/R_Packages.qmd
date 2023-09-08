@@ -20,6 +20,7 @@ theme: sketchy
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(root.dir = "/home/ryan/R/littlePackage")
 ```
 
 ## R Packages
@@ -145,8 +146,9 @@ use_r("randomadd")
 Copy and paste the function definitons into the editor window that pops up.  Namely, lines 114-117 for _funkyadd_ and lines 122-125 for _randomadd_.
 
 Now we run _load_all_ to bring our functions as we've defined them into the R workspace.  Note that we remove the previous manually created functions just to show that _load_all_ is working properly.  
-We also reconfirm that we're in the correct project directory.  Then we can check that the functions are in our workspace, now provided directly by the package defintions.
-```{r load_all}
+We also reconfirm that we're in the correct project directory.  Then we can check that the functions are in our workspace, now provided directly by the package definitions.
+[Note that at this point we're no longer going to print output from our commands in this summary text, due to a conflict between the package directory and our home directory.]
+```{r load_all, eval=FALSE}
 rm(funkyadd)
 rm(randomadd)
 setwd("/home/ryan/R/littlePackage/")
@@ -162,7 +164,7 @@ In the actual development of a package, it is recommended to commit your changes
 
 R has a function to look for any errors in your package.  In the terminal, you could type _R CMD check_.  Within R or Rstudio, use _check_
 
-```{r check}
+```{r check, eval=FALSE}
 check()
 ```
 We get a lot of output and a useful note and a warning in this case.
@@ -173,7 +175,7 @@ We get a lot of output and a useful note and a warning in this case.
 
 Run _use_mit_license_ to insert a complete current license for your package. Note the appearance of the LICENSE files after this. We could also use GPL or other licenses.  Use the _document_ command to make it finito.
 
-```{r license}
+```{r license, eval=FALSE}
 use_mit_license()
 ```
 
@@ -181,14 +183,14 @@ If you use RStudio, open R/funkyadd.R in the source editor and put the cursor so
 
 Now we run the _document_ command to generate Rdocumentation format files from our R commands.  We can repeat this process for _randomadd_.  Note that we could also create Rdocumentation (.Rd) files in a text editor, but the roxygen/document process saves us from learning a new set of markup tags.
 
-```{r document}
+```{r document, eval=FALSE}
 document()
 ?funkyadd
 ```
 Now we can get help on _funkyadd_ with the usual ?funkyadd syntax. The NAMESPACE file has also been updated by the _document_ command.
 
 We can now _check_ and _install_ the package to include it in our R space.  We can now load it with a _library_ command, although you may still want to _load_all_ to be safe.  Our functions should work now.
-```{r check and install}
+```{r check and install, eval=FALSE}
 check()
 install()
 library(littlePackage)
@@ -198,7 +200,7 @@ randomadd(3,6)
 
 We can test our package systematically by loading _use_testthat_ and then running tests using _use_test_.  Note that we have to create our own tests to run them.  These might check, for example, that the results of certain functions fall into the values we expect them to take.  The _use_test_ function will insert properly named R files into a "tests" directory, but it is up to you to edit them into something sensible.  Once tests are created, you can run them all with the _test_ command.
 
-```{r testthat}
+```{r testthat, eval=FALSE}
 use_testthat()
 use_test("funkyadd")
 test()
@@ -228,7 +230,7 @@ A final _check_ and _install_ once you are satisfied with all the edits on your 
 ```{r}
 ```
 
-```{r check and install}
+```{r check and install again, eval=FALSE}
 check()
 install()
 ```
@@ -261,3 +263,30 @@ We used the following commands to step through the creation, editing, and testin
 * use_readme_rmd()
 * check() [last time]
 * install() [last time]
+
+![Workflow for package creation](package_workflow.png)
+Quoting the [R Packages](https://r-pkgs.org/) book:
+
+Here is a review of the key functions you’ve seen here, organized roughly by their role in the development process.
+
+These functions setup parts of the package and are typically called once per package:
+
+* create_package()
+* use_git()
+* use_mit_license()
+* use_testthat()
+* use_github()
+* use_readme_rmd()
+
+You will call these functions on a regular basis, as you add functions and tests or take on dependencies:
+
+* use_r()
+* use_test()
+* use_package()
+
+You will call these functions multiple times per day or per hour, during development:
+
+* load_all()
+* document()
+* test()
+* check()
