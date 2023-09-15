@@ -32,20 +32,20 @@ NIH lists several
 [Generalist Repositories](https://sharing.nih.gov/data-management-and-sharing-policy/sharing-scientific-data/generalist-repositories)
 which are all good places to deposit data when more specialized repositories are not available.
 
-- [*Dataverse*](https://dataverse.org/)
+- [_Dataverse_](https://dataverse.org/)
 - [Dryad](https://datadryad.org/)
 - [Figshare](https://figshare.com/)
 - [IEEE Dataport](https://ieee-dataport.org/)
 - [Mendeley Data](https://data.mendeley.com/)
-- [**OpenICPSR*](https://openicpsr.org) - social science emphasis, free to use for Rutgers due to our institutional membership in ICPSR
-- [*Open Science Framework*](https://osf.io/)
+- [_OpenICPSR_](https://openicpsr.org) - social science emphasis, free to use for Rutgers due to our institutional membership in ICPSR
+- [_Open Science Framework_](https://osf.io/)
 - [Synapse](https://www.synapse.org/)
 - [Vivli](https://vivli.org/)
-- [*Zenodo*](https://zenodo.org/)
+- [_Zenodo_](https://zenodo.org/)
 
 A [comparison](https://doi.org/10.5281/zenodo.3946719) of many of these repositories is available.
 
-*italic* entries are recommended for their ease of use and suitability for a wide range of data.
+_italic_ entries are recommended for their ease of use and suitability for a wide range of data.
 
 Specialized repositories, if available, are the best place to deposit data with special characteristics.  These repositories are built to handle and showcase certain kinds of data.
 
