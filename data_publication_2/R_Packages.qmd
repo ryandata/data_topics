@@ -145,7 +145,7 @@ use_r("randomadd")
 ```
 Copy and paste the function definitons into the editor window that pops up.  Namely, lines 114-117 for _funkyadd_ and lines 122-125 for _randomadd_.
 
-Now we run _load_all_ to bring our functions as we've defined them into the R workspace.  Note that we remove the previous manually created functions just to show that _load_all_ is working properly.  
+Now we run _load_all_ to bring our functions as we've defined them into the R workspace.  Note that we remove the previous manually created functions just to show that _load_all_ is working properly.  Note that the _library_ command only works for installed packages. Since we haven't finished with our package yet, we need to use _load_all_ instead.
 We also reconfirm that we're in the correct project directory.  Then we can check that the functions are in our workspace, now provided directly by the package definitions.
 [Note that at this point we're no longer going to print output from our commands in this summary text, due to a conflict between the package directory and our home directory.]
 ```{r load_all, eval=FALSE}
@@ -290,3 +290,6 @@ You will call these functions multiple times per day or per hour, during develop
 * document()
 * test()
 * check()
+
+Some extras
+The [available](https://cran.r-project.org/package=available) package has a function called available() that helps you evaluate a potential package name from many angles:
