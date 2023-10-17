@@ -15,7 +15,7 @@ format:
       - top=30mm
       - left=30mm
   docx: default
-theme: cerulean #litera *journal *cerulean *slate solar
+theme: vapor #litera *journal *cerulean slate *solar sketchy vapor
 ---
 
 ```{r setup, include=FALSE}

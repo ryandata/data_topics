@@ -60,3 +60,10 @@ And for more information, use
 ### R package creation
 
 R Packages are an excellent way to distribute collections of data and code.  Following on the release of the 2nd edition of Hadley Wickham's [_R Packages_ book](https://r-pkgs.org), this workshop reviews the package creation process, covering prerequisites, the steps involved in creating a complete package, and following up on documentation and testing.
+
+You have a choice of how you'd like to follow along with this material.  To run code yourself, you can use the R_Packages.R, R_Packages.qmd (Quarto), or R_Packages.Rmd (Rmarkdown) files.  Alternatively, you can read along using:
+
+- R_Packages_light.html (web - light theme)
+- R_Packages_dark.html (web - dark theme)
+- R_Packages.pdf (PDF)
+- R_Packages.docx (Word)
