@@ -1,5 +1,5 @@
 ---
-title: "R for Data Analysis"
+title: "Getting started with R"
 output: html_document
 ---
 
