@@ -3,6 +3,8 @@ title: "R for Data Analysis"
 output: html_document
 ---
 
+For the video accompanying this content, see <https://youtu.be/ifOCC-9V_y0>
+
 ## What is R?
 <https://r-project.org>
 
