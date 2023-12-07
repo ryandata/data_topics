@@ -1,0 +1,32 @@
+---
+title: "R_Data_Analysis_2"
+author: "Ryan Womack"
+date: "2024-01-11"
+toc: true
+number-sections: true
+highlight-style: pygments
+output: html_document
+format:
+  html: 
+    code-fold: true
+    html-math-method: katex
+  pdf:
+    geometry: 
+      - top=30mm
+      - left=30mm
+  docx: default
+theme: vapor #litera *journal *cerulean slate *solar sketchy vapor
+---
+
+## R Data Analysis 2
+
+Copyright Ryan Womack, 2023. This work is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+statistical tests, sampling, bootstrap, and more + comparison with Python
+
+let's grab some data
+
+t-test
+chi-sq
+regression
+
