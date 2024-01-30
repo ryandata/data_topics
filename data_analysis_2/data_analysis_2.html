@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryan Womack">
-<meta name="dcterms.date" content="2024-01-11">
+<meta name="dcterms.date" content="2024-02-02">
 
 <title>R_Data_Analysis_2</title>
 <style>
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -47,7 +81,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#r-data-analysis-2" id="toc-r-data-analysis-2" class="nav-link active" data-scroll-target="#r-data-analysis-2"><span class="header-section-number">1</span> R Data Analysis 2</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#setup-and-preparing-data" id="toc-setup-and-preparing-data" class="nav-link" data-scroll-target="#setup-and-preparing-data"><span class="header-section-number">2</span> Setup and preparing data</a>
+  <ul class="collapse">
+  <li><a href="#r-packages-required" id="toc-r-packages-required" class="nav-link" data-scroll-target="#r-packages-required"><span class="header-section-number">2.1</span> R packages required</a></li>
+  <li><a href="#data-import-and-preparation" id="toc-data-import-and-preparation" class="nav-link" data-scroll-target="#data-import-and-preparation"><span class="header-section-number">2.2</span> Data import and preparation</a></li>
+  </ul></li>
+  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test"><span class="header-section-number">3</span> t-test</a>
+  <ul class="collapse">
+  <li><a href="#chi-sq-in-r-and-python" id="toc-chi-sq-in-r-and-python" class="nav-link" data-scroll-target="#chi-sq-in-r-and-python"><span class="header-section-number">3.1</span> chi-sq (in R and Python)</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">3.2</span> regression</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="data_analysis_2.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="data_analysis_2.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
 </div>
@@ -72,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 11, 2024</p>
+      <p class="date">February 2, 2024</p>
     </div>
   </div>
   
@@ -82,9 +126,278 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="r-data-analysis-2" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="r-data-analysis-2"><span class="header-section-number">1</span> R Data Analysis 2</h2>
-<p>Copyright Ryan Womack, 2023. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+<p>Copyright Ryan Womack, 2024. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+<p><strong>Data Analysis 2</strong></p>
+<p><em>statistical tests, regression, sampling, bootstrap, and more + comparison with Python</em></p>
+<section id="overview" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Overview</h1>
+<p>This workshop reviews the implementation of basic statistical tests and methods in R, with discussion contextualizing the appropriate use of these tests. For comparison purposes, an alternative Python approach to performing similar statistical analysis is illustrated in some cases. This workshop takes inspiration from the <strong>Introduction to Modern Statistics</strong> available via <a href="https://github.com/OpenIntroStat/ims">github</a> and <a href="https://openintro-ims2.netlify.app/">online text</a>, part of the <a href="https://openintro.org">OpenIntro</a> project.</p>
+<p>You can also consult <a href="https://methods-sagepub-com.proxy.libraries.rutgers.edu/which-stats-test">Sage Research Methods’ Which Stats Test?</a> for more information on choosing the appropriate statistical test. The other guides in Sage Research Methods are good too!</p>
+</section>
+<section id="setup-and-preparing-data" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Setup and preparing data</h1>
+<section id="r-packages-required" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="r-packages-required"><span class="header-section-number">2.1</span> R packages required</h2>
+<p>We will use the <a href="https://pak.r-lib.org/"><em>pak</em></a> package for installation as a more complete approach to package management. Replace the pkg commands with <em>install.packages()</em> versions if you prefer.</p>
+<p>This session relies on the <a href="https://tidyverse.org"><em>tidyverse</em></a> suite of packages for data manipulation as a preference, although the same tasks could be accomplished in base R. The statistical functions used are those from base R. Install <em>pak</em> and <em>tidyverse</em> if you don’t already have them on your system. We will also need <em>reticulate</em> to run Python code chunks.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pak"</span>, <span class="at">dependencies=</span><span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pak)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pkg_install</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pkg_install</span>(<span class="st">"reticulate"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">session_info</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now let’s load the tidyverse and reticulate (for Python support only)</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="data-import-and-preparation" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="data-import-and-preparation"><span class="header-section-number">2.2</span> Data import and preparation</h2>
+<p>Now let’s grab some data. We will use a realistic data example, the <a href="https://genderdata.worldbank.org/">World Bank’s Gender Statistics database</a>, whose <a href="https://databank.worldbank.org/data/download/Gender_Stats_CSV.zip">raw data</a> is directly downloadable. Other <a href="https://data.worldbank.org/">World Bank Open Data</a> is available as well. See <a href="https://genderdata.worldbank.org">genderdata.worldbank.org</a> for more background on the Gender Data portal. Note that we have to inspect the data and understand the variables first before manipulating in R – this is not an automatic process.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOption</span>(<span class="st">"timeout"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 60</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout=</span><span class="dv">6000</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://databank.worldbank.org/data/download/Gender_Stats_CSV.zip"</span>, <span class="st">"gender.zip"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(<span class="st">"gender.zip"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>gender_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Gender_StatsData.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 305545 Columns: 68
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: "," chr
+(4): Country Name, Country Code, Indicator Name, Indicator Code dbl (63): 1960,
+1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, ... lgl (1): ...68
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...68`</code></pre>
+</div>
+</div>
+<p>Now we’ll perform a few steps to clean the data, focusing on generating a useable file for a few countries (Central Asia and Mongolia plus selected high population or high income countries), from the latest available data year with complete data, typically the year before the last in the data set. For this session, we’ll just run these steps without explaining them. Data cleaning and wrangling is covered in more detail in the Data Analysis 1 workshop (forthcoming). The final filtered output is the <em>gender_data_final</em> file.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clean the data to remove superfluous columns</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gender_data)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>gender_data <span class="ot">&lt;-</span> gender_data[,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">4</span>)]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gender_data)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>gender_data <span class="ot">&lt;-</span> gender_data[,<span class="sc">-</span><span class="dv">66</span>]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gender_data)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># select countries of interest</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>country_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"China"</span>, <span class="st">"Germany"</span>, <span class="st">"India"</span>, <span class="st">"Japan"</span>, <span class="st">"Kazakhstan"</span>, <span class="st">"Kyrgyz Republic"</span>, <span class="st">"Mongolia"</span>, <span class="st">"Russian Federation"</span>, <span class="st">"Tajikistan"</span>, <span class="st">"Turkmenistan"</span>, <span class="st">"United States"</span>, <span class="st">"Uzbekistan"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>gender_data2 <span class="ot">&lt;-</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  gender_data <span class="sc">%&gt;%</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country Name</span><span class="st">`</span> <span class="sc">%in%</span> country_list)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># clean the data to focus on a recent more complete time period</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>gender_data3 <span class="ot">&lt;-</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>   gender_data2 <span class="sc">%&gt;%</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">pivot_longer</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">65</span>, <span class="at">names_to =</span> <span class="st">"Year"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">#filter by year</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>gender_data2021 <span class="ot">&lt;-</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  gender_data3 <span class="sc">%&gt;%</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year<span class="sc">==</span><span class="st">"2021"</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>gender_data2021 <span class="ot">&lt;-</span> gender_data2021[,<span class="sc">-</span><span class="dv">3</span>]</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>gender_data2021wide <span class="ot">&lt;-</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  gender_data2021 <span class="sc">%&gt;%</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator Name"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co"># now use a little sapply trick to select variables that don't have much missing data - here the proportion is 0.75 (the 0.25 in the function is 1-proportion desired)</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>gender_data_filtered <span class="ot">&lt;-</span> gender_data2021wide[,<span class="sc">!</span><span class="fu">sapply</span>(gender_data2021wide, <span class="cf">function</span>(x) <span class="fu">mean</span>(<span class="fu">is.na</span>(x)))<span class="sc">&gt;</span><span class="fl">0.25</span>]</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co"># and lastly simplify the dataset by removing some of the topics we won't use</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>phrases <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Worried"</span>, <span class="st">"Made"</span>, <span class="st">"Received"</span>, <span class="st">"Saved"</span>, <span class="st">"Used"</span>, <span class="st">"Coming"</span>, <span class="st">"Borrowed"</span>)</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>gender_data_final <span class="ot">&lt;-</span> </span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  gender_data_filtered <span class="sc">%&gt;%</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span><span class="fu">starts_with</span>(phrases))</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(gender_data_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s test for some basic relationships between life expectancy, education, labor, fertility, and income, and see if gender plays a role.</p>
+<p>We’ve attach the gender_data_final dataset</p>
+<p>[55] “Fertility rate, total (births per woman)” GNI per capita, PPP (current international $)”</p>
+<p>“Life expectancy at birth, female (years)”<br>
+[96] “Life expectancy at birth, male (years)”<br>
+[97] “Life expectancy at birth, total (years)”</p>
+<p>“School enrollment, primary (% gross)”<br>
+[197] “School enrollment, primary, female (% gross)”<br>
+[198] “School enrollment, primary, male (% gross)”</p>
+<p>[193] “Ratio of female to male labor force participation rate (%) (modeled ILO estimate)”<br>
+“Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)”<br>
+[79] “Labor force participation rate, male (% of male population ages 15+) (modeled ILO estimate)”<br>
+[80] “Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)”<br>
+[81] “Labor force participation rate, total (% of total population ages 15+) (modeled ILO estimate)”<br>
+[82] “Labor force participation rate, total (% of total population ages 15-64) (modeled ILO estimate)”</p>
+</section>
+</section>
+<section id="t-test" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> t-test</h1>
+<p>We use the t-test to see when there are significant differences between two groups. http://www.sthda.com/english/wiki/paired-samples-t-test-in-r</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="st">`</span><span class="at">Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)
+t = 11.361, df = 11, p-value = 2.037e-07
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 46.08261 68.22756
+sample estimates:
+mean of x 
+ 57.15508 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="st">`</span><span class="at">Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)</span><span class="st">`</span>, <span class="at">mu=</span><span class="dv">70</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)
+t = 1.1838, df = 11, p-value = 0.2614
+alternative hypothesis: true mean is not equal to 70
+95 percent confidence interval:
+ 66.44381 81.83336
+sample estimates:
+mean of x 
+ 74.13858 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="st">`</span><span class="at">Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)</span><span class="st">`</span>,<span class="st">`</span><span class="at">Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)</span><span class="st">`</span>, <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate) and Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)
+t = -3.9428, df = 11, p-value = 0.002301
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -26.464242  -7.502758
+sample estimates:
+mean difference 
+       -16.9835 </code></pre>
+</div>
+</div>
+<p>Running Python in RStudio requires the <em>reticulate</em> package. Your Python installation should also have <em>numpy</em> and <em>scipy</em> installed. Python will not have direct access to the R data structures, so we use a simplified example here from <a href="https://builtin.com/data-science/t-test-python">Builtin.com</a></p>
+<p>How to pass data from R to Python and vice-versa is described in this <a href="https://medium.com/data-and-beyond/how-to-seamlessly-integrate-python-into-r-rmarkdown-codes-2fe09cfdd0ee">blog post by Dima Diachkov</a></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># import from R</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>gender_python <span class="op">=</span> r.gender_data_final</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gender_python)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Country Name  ...  Women's share of population ages 15+ living with HIV (%)
+0                China  ...                                               30.4       
+1              Germany  ...                                               19.4       
+2                India  ...                                               45.0       
+3                Japan  ...                                                9.9       
+4           Kazakhstan  ...                                               38.5       
+5      Kyrgyz Republic  ...                                               38.5       
+6             Mongolia  ...                                               20.0       
+7   Russian Federation  ...                                               31.7       
+8           Tajikistan  ...                                               47.9       
+9         Turkmenistan  ...                                               32.1       
+10       United States  ...                                               22.1       
+11          Uzbekistan  ...                                               33.6       
+
+[12 rows x 244 columns]</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>labor <span class="op">=</span> gender_python.loc[:,<span class="st">"Labor force participation rate, female (</span><span class="sc">% o</span><span class="st">f female population ages 15-64) (modeled ILO estimate)"</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesized population mean</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="dv">70</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform one-sample t-test</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>t_stat, p_value <span class="op">=</span> stats.ttest_1samp(labor, mu)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"T statistic:"</span>, t_stat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>T statistic: -2.5533113439018207</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"P-value:"</span>, p_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>P-value: 0.026836385983149542</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting significance level</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Interpret the results</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&lt;</span> alpha:</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Reject the null hypothesis; there is a significant difference between the sample mean and the hypothesized population mean."</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Fail to reject the null hypothesis; there is no significant difference between the sample mean and the hypothesized population mean."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reject the null hypothesis; there is a significant difference between the sample mean and the hypothesized population mean.</code></pre>
+</div>
+</div>
+<section id="chi-sq-in-r-and-python" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="chi-sq-in-r-and-python"><span class="header-section-number">3.1</span> chi-sq (in R and Python)</h2>
+</section>
+<section id="regression" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="regression"><span class="header-section-number">3.2</span> regression</h2>
+</section>
 </section>
 
 </main>

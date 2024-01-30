@@ -1,7 +1,7 @@
 ---
 title: "R_Data_Analysis_2"
 author: "Ryan Womack"
-date: "2024-01-11"
+date: "2024-02-02"
 toc: true
 number-sections: true
 highlight-style: pygments
@@ -18,15 +18,175 @@ format:
 theme: vapor #litera *journal *cerulean slate *solar sketchy vapor
 ---
 
-## R Data Analysis 2
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(root.dir = "/home/ryan/R/data_topics/data_analysis2/")
+```
 
-Copyright Ryan Womack, 2023. This work is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+Copyright Ryan Womack, 2024. This work is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-statistical tests, sampling, bootstrap, and more + comparison with Python
+**Data Analysis 2**
 
-let's grab some data
+_statistical tests, regression, sampling, bootstrap, and more + comparison with Python_
 
-t-test
-chi-sq
-regression
+# Overview
+
+This workshop reviews the implementation of basic statistical tests and methods in R, with discussion contextualizing the appropriate use of these tests. For comparison purposes, an alternative Python approach to performing similar statistical analysis is illustrated in some cases.  This workshop takes inspiration from the **Introduction to Modern Statistics** available via [github](https://github.com/OpenIntroStat/ims) and [online text](https://openintro-ims2.netlify.app/), part of the [OpenIntro](https://openintro.org) project.
+
+You can also consult [Sage Research Methods' Which Stats Test?](https://methods-sagepub-com.proxy.libraries.rutgers.edu/which-stats-test) for more information on choosing the appropriate statistical test. The other guides in Sage Research Methods are good too!
+
+# Setup and preparing data
+
+## R packages required
+
+We will use the [_pak_](https://pak.r-lib.org/) package for installation as a more complete approach to package management. Replace the pkg commands with _install.packages()_ versions if you prefer.
+
+This session relies on the [_tidyverse_](https://tidyverse.org) suite of packages for data manipulation as a preference, although the same tasks could be accomplished in base R. The statistical functions used are those from base R. Install _pak_ and _tidyverse_ if you don't already have them on your system. We will also need _reticulate_ to run Python code chunks.
+
+```{r install packages, eval=FALSE}
+install.packages("pak", dependencies=TRUE)
+library(pak)
+pkg_install("tidyverse")
+pkg_install("reticulate")
+devtools::session_info()
+```
+
+Now let's load the tidyverse and reticulate (for Python support only)
+```{r tidyverse}
+library(tidyverse)
+library(reticulate)
+```
+
+## Data import and preparation
+
+Now let's grab some data. We will use a realistic data example, the [World Bank's Gender Statistics database](https://genderdata.worldbank.org/), whose [raw data](https://databank.worldbank.org/data/download/Gender_Stats_CSV.zip) is directly downloadable. Other [World Bank Open Data](https://data.worldbank.org/) is available as well. See [genderdata.worldbank.org](https://genderdata.worldbank.org) for more background on the Gender Data portal. Note that we have to inspect the data and understand the variables first before manipulating in R -- this is not an automatic process.
+
+```{r download and import data}
+getOption("timeout")
+options(timeout=6000)
+download.file("https://databank.worldbank.org/data/download/Gender_Stats_CSV.zip", "gender.zip")
+unzip("gender.zip")
+gender_data <- read_csv("Gender_StatsData.csv")
+```
+
+Now we'll perform a few steps to clean the data, focusing on generating a useable file for a few countries (Central Asia and Mongolia plus selected high population or high income countries), from the latest available data year with complete data, typically the year before the last in the data set. For this session, we'll just run these steps without explaining them. Data cleaning and wrangling is covered in more detail in the Data Analysis 1 workshop (forthcoming). The final filtered output is the _gender_data_final_ file.
+
+```{r data wrangling, results='hide'}
+# clean the data to remove superfluous columns
+names(gender_data)
+gender_data <- gender_data[,c(-2,-4)]
+names(gender_data)
+gender_data <- gender_data[,-66]
+names(gender_data)
+
+# select countries of interest
+country_list <- c("China", "Germany", "India", "Japan", "Kazakhstan", "Kyrgyz Republic", "Mongolia", "Russian Federation", "Tajikistan", "Turkmenistan", "United States", "Uzbekistan")
+gender_data2 <-
+  gender_data %>%
+  filter(`Country Name` %in% country_list)
+
+# clean the data to focus on a recent more complete time period
+gender_data3 <-
+   gender_data2 %>%
+   pivot_longer(3:65, names_to = "Year", values_to = "Value")
+
+#filter by year
+gender_data2021 <-
+  gender_data3 %>%
+  filter(Year=="2021")
+
+gender_data2021 <- gender_data2021[,-3]
+
+gender_data2021wide <-
+  gender_data2021 %>%
+  pivot_wider(names_from = "Indicator Name", values_from = "Value")
+
+# now use a little sapply trick to select variables that don't have much missing data - here the proportion is 0.75 (the 0.25 in the function is 1-proportion desired)
+
+gender_data_filtered <- gender_data2021wide[,!sapply(gender_data2021wide, function(x) mean(is.na(x)))>0.25]
+
+# and lastly simplify the dataset by removing some of the topics we won't use
+
+phrases <- c("Worried", "Made", "Received", "Saved", "Used", "Coming", "Borrowed")
+
+gender_data_final <- 
+  gender_data_filtered %>%
+  select(!starts_with(phrases))
+
+attach(gender_data_final)
+```
+Let's test for some basic relationships between life expectancy, education, labor, fertility, and income, and see if gender plays a role.
+
+We've attach the gender_data_final dataset
+
+ [55] "Fertility rate, total (births per woman)"                                                                            GNI per capita, PPP (current international $)"   
+
+"Life expectancy at birth, female (years)"                                                                            
+ [96] "Life expectancy at birth, male (years)"                                                                              
+ [97] "Life expectancy at birth, total (years)"   
+ 
+ "School enrollment, primary (% gross)"                                                                                
+[197] "School enrollment, primary, female (% gross)"                                                                        
+[198] "School enrollment, primary, male (% gross)"    
+
+[193] "Ratio of female to male labor force participation rate (%) (modeled ILO estimate)"                                   
+"Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)"                   
+ [79] "Labor force participation rate, male (% of male population ages 15+) (modeled ILO estimate)"                         
+ [80] "Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)"                       
+ [81] "Labor force participation rate, total (% of total population ages 15+) (modeled ILO estimate)"                       
+ [82] "Labor force participation rate, total (% of total population ages 15-64) (modeled ILO estimate)"  
+
+# t-test
+
+We use the t-test to see when there are significant differences between two groups.
+http://www.sthda.com/english/wiki/paired-samples-t-test-in-r
+
+```{r t-test}
+t.test(`Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`)
+t.test(`Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)`, mu=70)
+
+
+t.test(`Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`,`Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)`, paired = TRUE, alternative = "two.sided")
+
+
+
+```
+Running Python in RStudio requires the _reticulate_ package. Your Python installation should also have _numpy_ and _scipy_ installed. Python will not have direct access to the R data structures, so we use a simplified example here from [Builtin.com](https://builtin.com/data-science/t-test-python)
+
+How to pass data from R to Python and vice-versa is described in this [blog post by Dima Diachkov](https://medium.com/data-and-beyond/how-to-seamlessly-integrate-python-into-r-rmarkdown-codes-2fe09cfdd0ee)
+
+```{python t-test_py}
+import numpy as np
+from scipy import stats
+
+# import from R
+gender_python = r.gender_data_final
+
+print(gender_python)
+
+labor = gender_python.loc[:,"Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)"]
+
+
+# Hypothesized population mean
+mu = 70
+
+# Perform one-sample t-test
+t_stat, p_value = stats.ttest_1samp(labor, mu)
+print("T statistic:", t_stat)
+print("P-value:", p_value)
+
+# Setting significance level
+alpha = 0.05
+
+# Interpret the results
+if p_value < alpha:
+    print("Reject the null hypothesis; there is a significant difference between the sample mean and the hypothesized population mean.")
+else:
+    print("Fail to reject the null hypothesis; there is no significant difference between the sample mean and the hypothesized population mean.")
+```
+
+## chi-sq (in R and Python)
+
+
+## regression
 
