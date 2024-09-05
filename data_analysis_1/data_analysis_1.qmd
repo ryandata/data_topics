@@ -1,5 +1,5 @@
 ---
-title: "R_Data_Analysis_2"
+title: "R_Data_Analysis_1"
 author: "Ryan Womack"
 date: "2024-09-11"
 toc: true
@@ -62,6 +62,8 @@ use_python("/usr/lib/python3")
 ## Data import and preparation
 
 Now let's grab some data. We will use a realistic data example, the [World Bank's Gender Statistics database](https://genderdata.worldbank.org/), whose [raw data](https://databank.worldbank.org/data/download/Gender_Stats_CSV.zip) is directly downloadable. Other [World Bank Open Data](https://data.worldbank.org/) is available as well. See [genderdata.worldbank.org](https://genderdata.worldbank.org) for more background on the Gender Data portal. Note that we have to inspect the data and understand the variables first before manipulating in R -- this is not an automatic process.
+
+World Bank is sneaky...they change the name of the data file subtly every year. Gender_Stats_Data to Gender_StatsData to Gender_Stats_CSV
 
 ```{r download and import data}
 getOption("timeout")
@@ -230,51 +232,6 @@ we chi then we square
 ## regression
 
 we regress then we undress
-
-
-# linear regression
-lm(lifespread~`GDP per capita (constant 2010 US$)`)
-# with no intercept, add -1
-lm(lifespread~`GDP per capita (constant 2010 US$)`-1)
-
-# checking additional relationships
-lm(lifespread~`Fertility rate, total (births per woman)`)
-lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2010 US$)`)
-
-
-# to get full regression output, use summary
-summary(lm(lifespread~`GDP per capita (constant 2010 US$)`))
-summary(lm(lifespread~`Fertility rate, total (births per woman)`))
-summary(lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2010 US$)`))
-
-# multiple explanatory variables? just use +
-summary(lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2010 US$)`+lifespread))
-
-# we can store (and use) a regression output as an R object
-regoutput<-lm(`Fertility rate, total (births per woman)`~`GDP per capita (constant 2010 US$)`+lifespread)
-names(regoutput)
-regoutput$residuals
-
-# numerous quick functions are available to build off of the regression results
-
-# predicted values
-predict(regoutput)
-
-# analysis of variance (anova)
-anova(regoutput)
-
-# correlation
-cor(lifespread,`Fertility rate, total (births per woman)`)
-cor(lifespread,`Fertility rate, total (births per woman)`, na.rm=TRUE)
-# why won't those first two work?
-# defaults and options of R commands are not very standardized
-cor(lifespread,`Fertility rate, total (births per woman)`, use="complete.obs")
-cor.test(lifespread,`Fertility rate, total (births per woman)`)
-
-# we can also easily pull up regression diagnostic plots
-plot(regoutput, pch=3)
-
-# to be continued in parts 2 (data visualization) and 3 (data manipulation/wrangling)
 
 
 
