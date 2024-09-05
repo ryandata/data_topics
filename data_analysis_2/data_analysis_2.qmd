@@ -1,7 +1,7 @@
 ---
 title: "R_Data_Analysis_2"
 author: "Ryan Womack"
-date: "2024-02-02"
+date: "2024-09-11"
 toc: true
 number-sections: true
 highlight-style: pygments
@@ -54,7 +54,9 @@ devtools::session_info()
 Now let's load the tidyverse and reticulate (for Python support only)
 ```{r tidyverse}
 library(tidyverse)
+# Sys.setenv(RETICULATE_PYTHON = "/usr/lib/python3")
 library(reticulate)
+use_python("/usr/lib/python3")
 ```
 
 ## Data import and preparation
@@ -66,7 +68,7 @@ getOption("timeout")
 options(timeout=6000)
 download.file("https://databank.worldbank.org/data/download/Gender_Stats_CSV.zip", "gender.zip")
 unzip("gender.zip")
-gender_data <- read_csv("Gender_StatsData.csv")
+gender_data <- read_csv("Gender_StatsCSV.csv")
 ```
 
 Now we'll perform a few steps to clean the data, focusing on generating a useable file for a few countries (Central Asia and Mongolia plus selected high population or high income countries), from the latest available data year with complete data, typically the year before the last in the data set. For this session, we'll just run these steps without explaining them. Data cleaning and wrangling is covered in more detail in the Data Analysis 1 workshop (forthcoming). The final filtered output is the _gender_data_final_ file.
@@ -115,7 +117,7 @@ gender_data_final <-
 
 attach(gender_data_final)
 ```
-Let's test for some basic relationships between life expectancy, education, labor, fertility, and income, and see if gender plays a role.
+Let's test for some basic relationships between life expectancy, education, labor, fertility, and income, and see if gender plays a role.  Note that this is just for the purposes of demonstration, and not a serious investigation into these important research issues.
 
 We've attach the gender_data_final dataset
 
@@ -138,40 +140,76 @@ We've attach the gender_data_final dataset
 
 # t-test
 
-We use the t-test to see when there are significant differences between two groups.
-http://www.sthda.com/english/wiki/paired-samples-t-test-in-r
+In statistics there are many **hypothesis tests**. Per the Wikipedia entry on [statistical hypothesis tests](https://en.wikipedia.org/wiki/Statistical_hypothesis_test), 
+
+>"a statistical hypothesis test is a method of statistical inference used to decide whether the data sufficiently supports a particular hypothesis. A statistical hypothesis test typically involves a calculation of a test statistic. Then a decision is made, either by comparing the test statistic to a critical value or equivalently by evaluating a p-value computed from the test statistic. Roughly 100 specialized statistical tests have been defined."
+
+The hypothesis is usually framed as a "Null hypothesis", describing the situation where there is no statistically significant difference, and the alternative hypothesis. Then a test is chosen appropriate to the situation, which often involves invoking a statistical distribution.
+
+The *t-test* is one of the most common tests, used to determine if the difference between two groups, according to some numerical measure, is statistically significant. The Null hypothesis, usually denoted $H_{0}$, is that there is no difference (a difference of zero). The Alternative, usually denoted $H_{1}$, is that the difference is not zero.  
+
+The t-test was originally, and sometimes still is called ["Student's t-test"](https://en.wikipedia.org/wiki/Student's_t-test). The story of the student who invented this test, and his affiliation with a certain well known Irish stout, is interesting from both a statistical and human perspective. The $t$-test has a few variants: a one sample test, a two sample test with unpaired results, and two sample test with paired results.  The one sample test simply checks whether one measure is significantly different from the null. The two sample test with unpaired results compares whether two separate sets of observations are different, such as sampling the populations of two different cities. The two sample test with paired results implies that we have the same subjects in the dataset who are measured twice, perhaps at different intervals or via different measures. The $t$-distribution is the underlying statistical distribution determining the test statistic and critical value that we check for. These are conveniently summarized by the *p-value*, which expresses the level of significance. We typically look for a $p$<.05 to determine statistical significance, but this is a convention: other $p$-value cutoffs can be used.
+
+## one sample t-test
+
+We start with a one sample $t$-test to check the labor force participation rates of females and males across the countries in our dataset.
 
 ```{r t-test}
 t.test(`Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`)
-t.test(`Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)`, mu=70)
-
-
-t.test(`Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`,`Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)`, paired = TRUE, alternative = "two.sided")
-
-
-
 ```
+This first example returns a statistically significant, but not very interesting result. The default is to test whether the variable is different than zero. It is not surprising that female labor force participation is higher than zero.
+
+```{r t-test mu}
+t.test(`Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)`, mu=70)
+```
+We refine the test by passing the option $mu$=70, to test whether the male labor participation rate is significantly different than 70. With a $p$>.05 and a 95% confidence interval of (66,82), it is *not* significantly different than 70 in a statistical sense. 
+
+Note the use of options is a common R syntax technique. Base execution of the command without options gives sensible results, but one can pass many options to tweak the function's behavior. Most of the things demanded by statisticians are available through these option tweaks. Typing ?t.test (the question mark followed by the function name) will pull up the help that displays the possibilities.
+
+```{r help}
+?t.test
+```
+
+## paired t-test
+
+Perhaps a more interesting question is to see if there is a significantly significant difference in male and female labor participation rates. We can compare them, country-by-country, using the paired=TRUE option, in the paired two-sample test below. For one explanation of this see [dsds](http://www.sthda.com/english/wiki/paired-samples-t-test-in-r).
+
+```{r t-test paired}
+t.test(`Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`,`Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)`, paired = TRUE, alternative = "two.sided")
+```
+There is a statistically significant difference, with the 95% confidence interval of female participation being between 7 and 25 percentage points lower than male rates, and a mean difference of -16.
+
+## Python t-test
+
+We will be giving a flavor of the Python approach to these problems without going as in depth into Python, which is covered in other workshops in greater detail.
+
 Running Python in RStudio requires the _reticulate_ package. Your Python installation should also have _numpy_ and _scipy_ installed. Python will not have direct access to the R data structures, so we use a simplified example here from [Builtin.com](https://builtin.com/data-science/t-test-python)
 
 How to pass data from R to Python and vice-versa is described in this [blog post by Dima Diachkov](https://medium.com/data-and-beyond/how-to-seamlessly-integrate-python-into-r-rmarkdown-codes-2fe09cfdd0ee)
 
+Note that our code chunk is labeled Python. For more _reticulate_ package, see [this post](https://www.r-bloggers.com/2022/04/getting-started-with-python-using-r-and-reticulate/)
+
 ```{python t-test_py}
+# use_python("/usr/lib/python3")
 import numpy as np
+import pandas as pd
 from scipy import stats
 
 # import from R
 gender_python = r.gender_data_final
 
-print(gender_python)
+# print(gender_python)
 
-labor = gender_python.loc[:,"Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)"]
+# labor = gender_python.loc[:,"Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)"]
 
+student_scores = np.array([72, 89, 65, 73, 79, 84, 63, 76, 85, 75])
 
 # Hypothesized population mean
 mu = 70
 
 # Perform one-sample t-test
-t_stat, p_value = stats.ttest_1samp(labor, mu)
+# t_stat, p_value = stats.ttest_1samp(labor, mu)
+t_stat, p_value = stats.ttest_1samp(student_scores, mu)
 print("T statistic:", t_stat)
 print("P-value:", p_value)
 
@@ -187,6 +225,18 @@ else:
 
 ## chi-sq (in R and Python)
 
+we chi then we square
 
 ## regression
 
+we regress then we undress
+
+
+
+## sampling/Monte Carlo
+
+we sample then we rample
+
+## bootstrap
+
+we bootstrap then we crap
