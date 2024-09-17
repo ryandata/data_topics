@@ -19,11 +19,7 @@ format:
     colorlinks: true
     papersize: A4
   docx: default
-theme: cerulean #vapor #litera *journal  slate *solar sketchy
-include-in-header: 
-  text: |
-    \usepackage{fvextra}
-    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+theme: vapor #cerulean #vapor #litera *journal  slate *solar sketchy
 ---
 
 ```{r setup, include=FALSE}

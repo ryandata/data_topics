@@ -6,7 +6,7 @@ knitr::opts_chunk$set(root.dir = "/home/ryan/R/data_topics/data_analysis2/")
 
 
 ## ----install packages, eval=FALSE-----------------------------------------------------------------------------------------
-## 
+##
 ## install.packages("pak", dependencies=TRUE)
 ## library(pak)
 ## pkg_install("tidyverse")
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(root.dir = "/home/ryan/R/data_topics/data_analysis2/")
 ## pkg_install("infer")
 ## pkg_install("TOSTER")
 ## devtools::session_info()
-## 
+##
 
 
 ## ----tidyverse------------------------------------------------------------------------------------------------------------
@@ -74,14 +74,14 @@ gender_data_filtered <- gender_data2022wide[,!sapply(gender_data2022wide, functi
 
 phrases <- c("Worried", "Made", "Received", "Saved", "Used", "Coming", "Borrowed")
 
-gender_data_final <- 
+gender_data_final <-
   gender_data_filtered %>%
   select(!starts_with(phrases))
 
 # we'll also generate a couple of variables for future use
 
 gender_data_final$female_high_labor <- gender_data_final$`Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)`>70
-gender_data_final$male_high_labor <- gender_data_final$`Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)`>70 
+gender_data_final$male_high_labor <- gender_data_final$`Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)`>70
 
 attach(gender_data_final)
 
@@ -111,36 +111,36 @@ t.test(`Labor force participation rate, female (% of female population ages 15-6
 
 
 
-## 
+##
 ## import numpy as np
 ## import pandas as pd
 ## from scipy import stats
-## 
+##
 ## # import from R
 ## gender_python = r.gender_data_final
-## 
+##
 ## # print(gender_python)
-## 
+##
 ## labor = gender_python.loc[:,"Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)"]
-## 
+##
 ## # Hypothesized population mean
 ## mu = 70
-## 
+##
 ## # Perform one-sample t-test
 ## # t_stat, p_value = stats.ttest_1samp(labor, mu)
 ## t_stat, p_value = stats.ttest_1samp(labor, mu)
 ## print("T statistic:", t_stat)
 ## print("P-value:", p_value)
-## 
+##
 ## # Setting significance level
 ## alpha = 0.05
-## 
+##
 ## # Interpret the results
 ## if p_value < alpha:
 ##     print("Reject the null hypothesis; there is a significant difference between the sample mean and the hypothesized population mean.")
 ## else:
 ##     print("Fail to reject the null hypothesis; there is no significant difference between the sample mean and the hypothesized population mean.")
-## 
+##
 
 ## ----labor----------------------------------------------------------------------------------------------------------------
 
@@ -188,9 +188,9 @@ rnorm(5, mean=100, sd=20)
 
 
 ## ----correlation incorrect, eval=FALSE------------------------------------------------------------------------------------
-## 
+##
 ## cor(`GDP per capita (constant 2010 US$)`,`Fertility rate, total (births per woman)`, na.rm=TRUE)
-## 
+##
 
 
 ## ----correlation correct--------------------------------------------------------------------------------------------------
@@ -279,28 +279,28 @@ summary(logistic_output)
 
 
 
-## 
+##
 ## import numpy as np
 ## import pandas as pd
 ## from scipy import stats
 ## from sklearn.linear_model import LinearRegression
-## 
+##
 ## # import from R
 ## gender_python = r.gender_data_final
-## 
+##
 ## # specify variables
 ## labor = gender_python.loc[:,"Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)"]
 ## gdp = gender_python.loc[:,"GDP per capita (constant 2010 US$)"]
-## 
+##
 ## # this step is important to put the data in Python-friendly form
 ## labor2 = labor.array.reshape(-1, 1)
 ## gdp2 = gdp.array.reshape(-1, 1)
 ## model = LinearRegression().fit(labor2,gdp2)
-## 
+##
 ## print(model.intercept_, model.coef_)
 ## r_sq = model.score(labor2, gdp2)
 ## print(f"R-squared: {r_sq}")
-## 
+##
 
 ## ----point_estimate-------------------------------------------------------------------------------------------------------
 
@@ -316,7 +316,7 @@ boot_dist_dangerous <- gender_data_final %>%
   specify(response = `A woman can work in a job deemed dangerous in the same way as a man (1=yes; 0=no)`) %>%
   generate(reps = 50000, type = "bootstrap") %>%
   calculate(stat = "mean")
-  
+
 
 
 ## ----bootstrap replicates-------------------------------------------------------------------------------------------------
@@ -327,7 +327,7 @@ boot_dist_dangerous %>%
 boot_dist_dangerous %>%
   visualize() +
   shade_p_value(obs_stat = point_estimate, direction = "two-sided")
-  
+
 boot_dist_dangerous %>%
   get_confidence_interval(
     point_estimate = point_estimate,
@@ -357,32 +357,32 @@ var_slope <- gender_data_final |>
   generate(reps = 500, type = "permute") |>
   calculate(stat = "slope")
 
-var_slope |> 
+var_slope |>
   # Ungroup the dataset
-  ungroup() |> 
+  ungroup() |>
   # Calculate summary statistics
   summarize(
     # Mean of stat
-    mean_stat = mean(stat), 
+    mean_stat = mean(stat),
     # Std error of stat
     std_err_stat = sd(stat)
-  )  
+  )
 
 
 
-## 
+##
 ## from scipy.stats import bootstrap
 ## import numpy as np
-## 
+##
 ## labor = r.labor_diff
-## 
+##
 ## #convert array to sequence
 ## data = (labor,)
-## 
+##
 ## #calculate 95% bootstrapped confidence interval for median
 ## bootstrap_ci = bootstrap(data, np.mean, confidence_level=0.95,
 ##                          random_state=1, method='percentile')
-## 
+##
 ## #view 95% boostrapped confidence interval
 ## print(bootstrap_ci.confidence_interval)
-## 
+##
