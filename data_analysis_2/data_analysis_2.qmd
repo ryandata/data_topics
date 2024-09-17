@@ -19,7 +19,7 @@ format:
     colorlinks: true
     papersize: A4
   docx: default
-theme: cerulean #vapor #litera *journal  slate *solar sketchy
+theme: vapor #cerulean #vapor #litera *journal  slate *solar sketchy
 include-in-header: 
   text: |
     \usepackage{fvextra}
