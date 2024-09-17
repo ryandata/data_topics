@@ -65,10 +65,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="data_analysis_2_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="data_analysis_2_files/libs/quarto-html/anchor.min.js"></script>
 <link href="data_analysis_2_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="data_analysis_2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="data_analysis_2_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="data_analysis_2_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="data_analysis_2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="data_analysis_2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="data_analysis_2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -162,8 +162,9 @@ window.Quarto = {
 <li><a href="https://ryanwomack.com/data_topics/data_analysis_2/data_analysis_2.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li>
 <li><a href="https://ryanwomack.com/data_topics/data_analysis_2/data_analysis_2.docx"><i class="bi bi-file-word"></i>MS Word</a></li>
 <li><a href="https://ryanwomack.com/data_topics/data_analysis_2/data_analysis_2.R"><i class="bi bi-file-text"></i>R script only</a></li>
-<li><a href="https://ryanwomack.com/data_topics/data_analysis_2/data_analysis_2_dark.html"><i class="bi bi-file-html"></i>HTML - dark mode</a></li>
-</ul></div></nav>
+<li><a href="https://ryanwomack.com/data_topics/data_analysis_2/data_analysis_2.html"><i class="bi bi-file-html"></i>HTML - light mode</a></li>
+</ul>
+</div></nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -573,7 +574,7 @@ X-squared = 0.27429, df = 1, p-value = 0.6005</code></pre>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1353094</code></pre>
+<pre><code>[1] -1.197966</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -582,7 +583,7 @@ X-squared = 0.27429, df = 1, p-value = 0.6005</code></pre>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean=</span><span class="dv">100</span>, <span class="at">sd=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 112.91233  97.24226 116.28819 120.25501 120.06519</code></pre>
+<pre><code>[1]  94.66075  65.15305  71.41476 110.93999  77.83116</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -1102,7 +1103,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
-1    0.160    0.750</code></pre>
+1    0.161    0.748</code></pre>
 </div>
 </div>
 <p>Note that we are resampling from a small population of 12, so even with large replications, our confidence interval is wide. Using this technique on the type of country data we have is atypical, and is just for demonstration purposes. A more typical usage would be on survey data with individual responses selected from a larger population. Again to quote <em>IMS</em>, “bootstrapping is best suited for modeling studies where the data have been generated through random sampling from a population.”</p>
@@ -1130,7 +1131,7 @@ data:  x
 p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
-  8.15384 32.83342
+  8.879002 30.140440
 sample estimates:
 mean of x 
  16.22617 </code></pre>
@@ -1164,7 +1165,7 @@ mean of x
 <pre><code># A tibble: 1 × 2
   mean_stat std_err_stat
       &lt;dbl&gt;        &lt;dbl&gt;
-1     0.274         6.31</code></pre>
+1    -0.606         6.03</code></pre>
 </div>
 </div>
 </section>
