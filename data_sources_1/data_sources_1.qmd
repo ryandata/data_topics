@@ -20,10 +20,6 @@ format:
     papersize: A4
   docx: default
 theme: litera
-include-in-header: 
-  text: |
-    \usepackage{fvextra}
-    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 ---
 
 ```{r setup, include=FALSE}
@@ -166,6 +162,8 @@ Many organizations and projects focus attention on data and issues related to mi
 - [**Mapping Inequality**](https://dsl.richmond.edu/panorama/redlining/) - redlining in New Deal America
 
 - [**Mapping Prejudice**](https://mappingprejudice.umn.edu/) - visualizing the hidden histories of race and privilege in the built environment
+
+- [**Measuring Race and Ethnicity Across the Decades: 1790–2010**](https://www.census.gov/data-tools/demo/race/MREAD_1790_2010.html) - how racial classifications used by the government have changed from 1790-2020, with [further information](https://www.census.gov/library/visualizations/interactive/decennial-census-measurement-of-race-and-ethnicity-across-the-decades-1790-2020.html)
 
 - [**IASSIST Antiracism resources guide**](https://iassistdata.org/community/antiracism-resources-guide/) - for more data sources, check here.
 
