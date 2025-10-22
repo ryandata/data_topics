@@ -15,11 +15,7 @@ format:
       - top=30mm
       - left=30mm
   docx: default
-theme: litera
-include-in-header: 
-  text: |
-    \usepackage{fvextra}
-    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+theme: cyborg
 ---
 
 ```{r initiate, include=FALSE}
@@ -27,8 +23,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Copyright Ryan Womack, 2025. This work is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-
-{{< pagebreak >}}
 
 _creating reproducible research and literate programming documents, using knitr, Sweave, Quarto, blogdown, and bookdown_
 
