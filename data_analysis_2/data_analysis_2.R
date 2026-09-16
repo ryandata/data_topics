@@ -85,25 +85,6 @@ gender_data_final$male_high_labor <- gender_data_final$`Labor force participatio
 
 attach(gender_data_final)
 
-# also prepare (for Bootstrap section, a non-country filtered version of the data)
-
-gender_data4 <-
-   gender_data %>%
-   pivot_longer(3:68, names_to = "Year", values_to = "Value")
-
-#filter by year
-gender_data2023_full <-
-  gender_data4 %>%
-  filter(Year=="2023")
-
-gender_data2023_full <- gender_data2023_full[,-3]
-
-gender_data2023wide_full <-
-  gender_data2023_full %>%
-  pivot_wider(names_from = "Indicator Name", values_from = "Value")
-
-
-
 
 ## ----t-test-------------------------------------------------------------------
 

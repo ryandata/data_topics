@@ -327,24 +327,7 @@ dbl (66): 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, ...
 <span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>gender_data_final<span class="sc">$</span>female_high_labor <span class="ot">&lt;-</span> gender_data_final<span class="sc">$</span><span class="st">`</span><span class="at">Labor force participation rate, female (% of female population ages 15-64) (modeled ILO estimate)</span><span class="st">`</span><span class="sc">&gt;</span><span class="dv">70</span></span>
 <span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>gender_data_final<span class="sc">$</span>male_high_labor <span class="ot">&lt;-</span> gender_data_final<span class="sc">$</span><span class="st">`</span><span class="at">Labor force participation rate, male (% of male population ages 15-64) (modeled ILO estimate)</span><span class="st">`</span><span class="sc">&gt;</span><span class="dv">70</span> </span>
 <span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(gender_data_final)</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a><span class="co"># also prepare (for Bootstrap section, a non-country filtered version of the data)</span></span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>gender_data4 <span class="ot">&lt;-</span></span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>   gender_data <span class="sc">%&gt;%</span></span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>   <span class="fu">pivot_longer</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">68</span>, <span class="at">names_to =</span> <span class="st">"Year"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>)</span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="co">#filter by year</span></span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>gender_data2023_full <span class="ot">&lt;-</span></span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>  gender_data4 <span class="sc">%&gt;%</span></span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year<span class="sc">==</span><span class="st">"2023"</span>)</span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>gender_data2023_full <span class="ot">&lt;-</span> gender_data2023_full[,<span class="sc">-</span><span class="dv">3</span>]</span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>gender_data2023wide_full <span class="ot">&lt;-</span></span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>  gender_data2023_full <span class="sc">%&gt;%</span></span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator Name"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(gender_data_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Let’s test for some basic relationships between labor participation, gender, fertility, and income, using the <a href="https://genderdata.worldbank.org/en/about">World Bank’s own definition of gender</a>:</p>
@@ -590,7 +573,7 @@ X-squared = 0.075, df = 1, p-value = 0.7842</code></pre>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -2.007663</code></pre>
+<pre><code>[1] 0.7556518</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -599,7 +582,7 @@ X-squared = 0.075, df = 1, p-value = 0.7842</code></pre>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean=</span><span class="dv">100</span>, <span class="at">sd=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  81.32642 111.67139 112.22547 106.64819  74.03370</code></pre>
+<pre><code>[1] 119.68569  80.76406 111.57659 119.61372 102.32594</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -1150,7 +1133,7 @@ data:  x
 p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 10.74453 31.91686
+ 11.12090 32.42594
 sample estimates:
 mean of x 
  18.26483 </code></pre>
@@ -1184,7 +1167,7 @@ mean of x
 <pre><code># A tibble: 1 × 2
   mean_stat std_err_stat
       &lt;dbl&gt;        &lt;dbl&gt;
-1    0.0907         6.39</code></pre>
+1   -0.0866         6.56</code></pre>
 </div>
 </div>
 </section>
